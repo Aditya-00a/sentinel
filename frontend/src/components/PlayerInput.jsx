@@ -7,7 +7,7 @@ const REGIONS = [
   { value: 'asia', label: 'Asia', platforms: ['kr', 'jp1'] },
 ];
 
-export default function PlayerInput({ game, onReview, onDemoReview, isLoading, demoProfiles }) {
+export default function PlayerInput({ onReview, onDemoReview, isLoading, demoProfiles }) {
   const [riotId, setRiotId] = useState('');
   const [region, setRegion] = useState('americas');
   const [platform, setPlatform] = useState('na1');
@@ -17,7 +17,7 @@ export default function PlayerInput({ game, onReview, onDemoReview, isLoading, d
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!riotId.includes('#')) return;
-    onReview({ game, riot_id: riotId, region, platform });
+    onReview({ game: 'lol', riot_id: riotId, region, platform });
   };
 
   return (
@@ -82,7 +82,7 @@ export default function PlayerInput({ game, onReview, onDemoReview, isLoading, d
             <p className="text-val-dim text-[9px] font-mono uppercase tracking-widest-xl">Or select a trajectory</p>
             <div className="h-px w-8 bg-val-border"></div>
           </div>
-          <DemoProfileChips profiles={demoProfiles} onSelect={onDemoReview} isLoading={isLoading} currentGame={game} />
+          <DemoProfileChips profiles={demoProfiles} onSelect={onDemoReview} isLoading={isLoading} />
         </div>
       </div>
     </section>

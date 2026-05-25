@@ -16,7 +16,6 @@ const INITIAL_AGENT_STATES = {
 };
 
 export default function App() {
-  const [game, setGame] = useState('lol');
   const [dataMode, setDataMode] = useState('demo');
   const [currentView, setCurrentView] = useState('demo');
   const [showAbout, setShowAbout] = useState(false);
@@ -116,7 +115,7 @@ export default function App() {
   if (currentView === 'how-it-works') {
     return (
       <div className="min-h-screen bg-val-dark">
-        <TopNav game={game} onGameChange={setGame} dataMode={dataMode} currentView={currentView} onViewChange={handleViewChange} />
+        <TopNav dataMode={dataMode} currentView={currentView} onViewChange={handleViewChange} />
         <HowItWorks onBack={() => setCurrentView('demo')} />
         <Footer />
         {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
@@ -126,8 +125,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-val-dark flex flex-col">
-      <TopNav game={game} onGameChange={setGame} dataMode={dataMode} currentView={currentView} onViewChange={handleViewChange} />
-      <PlayerInput game={game} onReview={handleReview} onDemoReview={handleDemoReview} isLoading={isLoading} demoProfiles={demoProfiles} />
+      <TopNav dataMode={dataMode} currentView={currentView} onViewChange={handleViewChange} />
+      <PlayerInput onReview={handleReview} onDemoReview={handleDemoReview} isLoading={isLoading} demoProfiles={demoProfiles} />
 
       {error && (
         <div className="px-6 pb-4">
