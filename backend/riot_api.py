@@ -1,7 +1,7 @@
 import os
 import logging
 import httpx
-from backend.db import cache_get, cache_set
+from db import cache_get, cache_set
 
 logger = logging.getLogger("sentinel.riot_api")
 

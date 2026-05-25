@@ -3,7 +3,7 @@ import time
 import logging
 from pathlib import Path
 from groq import Groq
-from backend.schemas import (
+from schemas import (
     OrchestratorOutput, TrajectoryOutput, ContextOutput,
     InterventionOutput, EffectivenessOutput, Decision, Severity,
 )

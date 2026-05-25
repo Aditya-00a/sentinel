@@ -3,7 +3,7 @@ import time
 import logging
 from pathlib import Path
 from groq import Groq
-from backend.schemas import TrajectoryOutput
+from schemas import TrajectoryOutput
 
 logger = logging.getLogger("sentinel.agents.trajectory")
 PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "behavior.md"

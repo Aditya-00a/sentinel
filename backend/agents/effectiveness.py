@@ -3,7 +3,7 @@ import time
 import logging
 from pathlib import Path
 from groq import Groq
-from backend.schemas import EffectivenessOutput, TrajectoryOutput, ContextOutput, InterventionOutput
+from schemas import EffectivenessOutput, TrajectoryOutput, ContextOutput, InterventionOutput
 
 logger = logging.getLogger("sentinel.agents.effectiveness")
 PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "compliance.md"

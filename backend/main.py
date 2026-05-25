@@ -9,13 +9,15 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Ensure project root is in sys.path so `from backend.X import` works
-# whether running locally (python -m uvicorn backend.main:app from root)
-# or on Vercel (experimentalServices mounts backend/ as root)
-_here = Path(__file__).parent          # .../backend/
-_root = _here.parent                   # .../sentinel/
-if str(_root) not in sys.path:
-    sys.path.insert(0, str(_root))
+# Make imports work in BOTH environments:
+#   - Local dev: `python -m uvicorn backend.main:app` from project root
+#     (backend/ is loaded as a package; we add backend/ itself to sys.path
+#      so bare `from agents import ...` also resolves)
+#   - Vercel:  experimentalServices mounts backend/ as the deployment root,
+#     so there's no `backend` package at runtime — only bare modules work.
+_here = Path(__file__).parent          # .../backend/  OR  /var/task on Vercel
+if str(_here) not in sys.path:
+    sys.path.insert(0, str(_here))
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request, HTTPException
@@ -24,16 +26,16 @@ from fastapi.staticfiles import StaticFiles
 from groq import Groq
 from sse_starlette.sse import EventSourceResponse
 
-from backend.agents import (
+from agents import (
     run_trajectory_agent,
     run_context_agent,
     run_intervention_agent,
     run_effectiveness_agent,
     run_orchestrator_agent,
 )
-from backend.db import init_db, save_review, save_audit, get_history, get_review
-from backend.demo_profiles import get_demo_profiles_summary, get_demo_profile, DEMO_PROFILES
-from backend.riot_api import (
+from db import init_db, save_review, save_audit, get_history, get_review
+from demo_profiles import get_demo_profiles_summary, get_demo_profile, DEMO_PROFILES
+from riot_api import (
     get_account_by_riot_id,
     get_summoner_by_puuid,
     get_match_ids_lol,
@@ -42,7 +44,7 @@ from backend.riot_api import (
     get_match_detail_val,
     check_api_health,
 )
-from backend.schemas import ReviewRequest, DataMode
+from schemas import ReviewRequest, DataMode
 
 load_dotenv()
 

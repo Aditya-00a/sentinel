@@ -3,7 +3,7 @@ import time
 import logging
 from pathlib import Path
 from groq import Groq
-from backend.schemas import InterventionOutput
+from schemas import InterventionOutput
 
 logger = logging.getLogger("sentinel.agents.intervention")
 PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "network.md"
