@@ -1,9 +1,18 @@
+import os
 import sqlite3
 import json
 import time
 from pathlib import Path
 
-DB_PATH = Path(__file__).parent.parent / "sentinel.db"
+# On Vercel (and most serverless runtimes) the function filesystem is
+# read-only EXCEPT /tmp/. Detect that and write the SQLite file there.
+# DB state is ephemeral per cold-start in serverless — acceptable because
+# it's a cache + audit log, not authoritative source-of-truth state.
+if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+    DB_PATH = Path("/tmp/sentinel.db")
+else:
+    DB_PATH = Path(__file__).parent.parent / "sentinel.db"
+
 CACHE_TTL_SECONDS = 7 * 24 * 3600
 
 
