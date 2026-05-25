@@ -5,7 +5,9 @@ from db import cache_get, cache_set
 
 logger = logging.getLogger("sentinel.riot_api")
 
-RIOT_API_KEY = os.environ.get("RIOT_API_KEY", "")
+# .strip() defends against trailing newlines introduced when env vars
+# are added via `echo "..." | vercel env add` on PowerShell/bash.
+RIOT_API_KEY = os.environ.get("RIOT_API_KEY", "").strip()
 
 PLATFORM_TO_CLUSTER = {
     "na1": "americas", "br1": "americas", "la1": "americas", "la2": "americas",

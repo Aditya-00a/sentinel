@@ -82,7 +82,9 @@ async def startup():
 
 
 def get_groq_client() -> Groq:
-    api_key = os.environ.get("GROQ_API_KEY", "")
+    # .strip() defends against trailing newlines introduced when env vars
+    # are added via `echo "..." | vercel env add` on PowerShell/bash.
+    api_key = os.environ.get("GROQ_API_KEY", "").strip()
     if not api_key:
         raise HTTPException(status_code=500, detail="GROQ_API_KEY not configured")
     return Groq(api_key=api_key)
