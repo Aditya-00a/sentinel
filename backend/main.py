@@ -2,11 +2,20 @@ import asyncio
 import json
 import logging
 import os
+import sys
 import time
 import uuid
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
+
+# Ensure project root is in sys.path so `from backend.X import` works
+# whether running locally (python -m uvicorn backend.main:app from root)
+# or on Vercel (experimentalServices mounts backend/ as root)
+_here = Path(__file__).parent          # .../backend/
+_root = _here.parent                   # .../sentinel/
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request, HTTPException
