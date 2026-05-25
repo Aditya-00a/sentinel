@@ -1,4 +1,6 @@
-const API_BASE = '/api';
+// On Vercel, backend service is mounted at /_/backend
+// Locally, the vite proxy rewrites /_/backend → localhost:8000 (stripping prefix)
+const API_BASE = '/_/backend/api';
 
 export async function fetchDemoProfiles() {
   const res = await fetch(`${API_BASE}/demo-profiles`);
