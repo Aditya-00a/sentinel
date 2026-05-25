@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: sentinel
+    runtime: docker
+    plan: free
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: RIOT_API_KEY
+        sync: false
