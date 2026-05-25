@@ -50,6 +50,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def strip_vercel_prefix(request: Request, call_next):
+    """Strip /_/backend prefix added by Vercel's experimentalServices routing."""
+    path = request.scope.get("path", "")
+    if path.startswith("/_/backend"):
+        request.scope["path"] = path[len("/_/backend"):] or "/"
+        request.scope["raw_path"] = request.scope["path"].encode()
+    return await call_next(request)
+
 rate_limit_store: dict[str, list[float]] = defaultdict(list)
 RATE_LIMIT = 20
 RATE_WINDOW = 60
