@@ -49,9 +49,24 @@ export default function PlayerInput({ onReview, onDemoReview, isLoading, demoPro
           the minimum effective intervention before reports happen.
         </p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 max-w-2xl mx-auto mb-6">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-2xl mx-auto mb-6">
+          {/* Helper text */}
+          <div className="flex items-start gap-2 px-1">
+            <svg className="w-3 h-3 mt-0.5 text-val-dim shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" />
+            </svg>
+            <p className="text-[10px] text-val-dim font-mono leading-relaxed">
+              Enter your <span className="text-val-text">Riot ID</span> — found in-client at{' '}
+              <span className="text-val-text">top-left of your profile</span> (e.g.{' '}
+              <span className="text-val-red font-semibold">Faker#KR1</span>,{' '}
+              <span className="text-val-red font-semibold">Doublelift#NA1</span>). Must include the{' '}
+              <span className="text-val-text">#tag</span>. Region should match your server.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-2">
           <input type="text" value={riotId} onChange={(e) => setRiotId(e.target.value)}
-            placeholder="Riot ID (e.g. Player#NA1)"
+            placeholder="RiotID#TAG  (e.g. Faker#KR1)"
             className="flex-1 px-4 py-3 bg-val-card border border-val-border rounded text-white placeholder:text-val-dim focus:outline-none focus:border-val-red transition-colors font-mono text-sm"
             disabled={isLoading} />
           <select value={region} onChange={(e) => { setRegion(e.target.value); const nr = REGIONS.find(r => r.value === e.target.value); if (nr) setPlatform(nr.platforms[0]); }}
@@ -74,6 +89,7 @@ export default function PlayerInput({ onReview, onDemoReview, isLoading, demoPro
               </span>
             ) : 'Forecast'}
           </button>
+          </div>
         </form>
 
         <div className="mt-14">
